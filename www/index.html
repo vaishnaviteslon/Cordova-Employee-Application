@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Employee Manager</h1>
+  <input type="text" id="searchBox" placeholder="Search employee..." oninput="searchEmployee()">
+  <div id="employeeForm">
+    <input type="text" id="empName" placeholder="Name">
+    <input type="text" id="empRole" placeholder="Role">
+    <input type="file" id="empPhoto" accept="image/*" onchange="loadPhoto(event)">
+    <img id="previewPhoto" width="100">
+    <button onclick="capturePhoto()">Take Photo</button>
+    <button onclick="addEmployee()">Add</button>
+    <button onclick="updateEmployee()">Update</button>
+  </div>
+  <ul id="employeeList"></ul>
+
+  <script src="cordova.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
