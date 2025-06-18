@@ -1,4 +1,4 @@
-let employees = [];
+let employees = JSON.parse(localStorage.getItem('employees')) || []
 let currentPhoto = "";
 let editingEmployeeId = null;
 
@@ -9,7 +9,8 @@ function addEmployee() {
 
   const id = Date.now();
   employees.push({ id, name, role, photo: currentPhoto });
-  displayEmployees();
+  localStorage.setItem('employees',JSON.stringify(employees))
+  displayEmployees(employees);
   resetForm();
 }
 
@@ -28,7 +29,7 @@ function updateEmployee() {
     employees[index].role = role;
     employees[index].photo = currentPhoto;
 
-    displayEmployees();
+    displayEmployees(employees);
     resetForm();
     editingEmployeeId = null;
   } else {
@@ -37,7 +38,7 @@ function updateEmployee() {
 }
 
 
-function displayEmployees() {
+function displayEmployees(employees) {
   const list = document.getElementById('employeeList');
   list.innerHTML = '';
   employees.forEach(emp => {
@@ -51,7 +52,7 @@ function displayEmployees() {
 
 function deleteEmployee(id) {
   employees = employees.filter(emp => emp.id !== id);
-  displayEmployees();
+  displayEmployees(employees);
 }
 
 function editEmployee(id) {
@@ -68,13 +69,7 @@ function editEmployee(id) {
 function searchEmployee() {
   const query = document.getElementById('searchBox').value.toLowerCase();
   const filtered = employees.filter(e => e.name.toLowerCase().includes(query));
-  const list = document.getElementById('employeeList');
-  list.innerHTML = '';
-  filtered.forEach(emp => {
-    const li = document.createElement('li');
-    li.innerHTML = `<b>${emp.name}</b> - ${emp.role}<br><img src="${emp.photo}" width="50">`;
-    list.appendChild(li);
-  });
+  displayEmployees(filtered)
 }
 
 function loadPhoto(event) {
